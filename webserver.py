@@ -28,7 +28,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 f.close()
                 return
             elif self.path == '/':
-                f = open(curdir + sep + 'hello_world.html')
+                f = open(curdir + sep + 'index.html')
                 self.send_response(200)
                 self.send_header('Content-type',	'text/html')
                 self.end_headers()
