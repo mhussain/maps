@@ -5,6 +5,9 @@ from os import curdir, sep
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 #import pri
 
+
+credits = ["Giesemann, Geoffrey", "Liu, Carol", "Hall, Daniel", "Hussain, Mujtaba"]
+
 class MyHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -71,7 +74,11 @@ class MyHandler(BaseHTTPRequestHandler):
 def main():
     try:
         server = HTTPServer(('', 8900), MyHandler)
-        print 'Starting Border Control'
+        print "Starting Border Control\n"
+        print "This innovation day project implemented by"
+        for people in credits:
+            print people
+        print
         server.serve_forever()
     except KeyboardInterrupt:
         print '^C received, shutting down server'
