@@ -1,2 +1,16 @@
 This is the work Carol, Geoffrey and Mujtaba Hussain did for 
 Innovation day.
+
+git clone this repo.
+
+Then ensure you have python installed
+
+from a terminal, run
+
+python webserver.py
+
+open chrome, and go to 
+
+127.0.0.1:8900/
+
+And then rest should be easy.
