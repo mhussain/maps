@@ -20,57 +20,33 @@ body { height: 100%; margin: 0px; padding: 0px }
 var markersArray = []
 
 function initialize() {
-    var home = new google.maps.LatLng(
-      -26.00, 135.00
-    );
+  var home = new google.maps.LatLng(
+    -26.00, 135.00
+  );
 
-    var myOptions = {
-      zoom: 5,
-      center: home ,
-      navigationControl: true,
-      navigationControlOptions: {
-        style: google.maps.NavigationControlStyle.ZOOM_PAN
-      },
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+  var myOptions = {
+    zoom: 5,
+    center: home ,
+    navigationControl: true,
+    navigationControlOptions: {
+      style: google.maps.NavigationControlStyle.ZOOM_PAN
+    },
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
 
-    var map = new google.maps.Map(
-      document.getElementById('map_canvas'),
-      myOptions
-    );
+  var map = new google.maps.Map(
+    document.getElementById('map_canvas'),
+    myOptions
+  );
 
-    var controls = add_controls(map, home);
-    var fluster = new Fluster2(map);
+  var controls = add_controls(map, home);
+  var fluster = new Fluster2(map);
 
-    $.getJSON('/json_data.html', function(suburb_data2) {
-
-    var created_map = create_map(map, fluster, suburb_data2);
-
-    fluster.styles = {
-      0: {
-        image: 'http://gmaps-utility-library.googlecode.com/svn/trunk/markerclusterer/1.0/images/m1.png',
-        textColor: '#FFFFFF',
-        width: 53,
-        height: 52
-      },
-      50: {
-        image: 'http://gmaps-utility-library.googlecode.com/svn/trunk/markerclusterer/1.0/images/m2.png',
-        textColor: '#FFFFFF',
-        width: 56,
-        height: 55
-      },
-      100: {
-        image: 'http://gmaps-utility-library.googlecode.com/svn/trunk/markerclusterer/1.0/images/m3.png',
-        textColor: '#FFFFFF',
-        width: 66,
-        height: 65
-      }
-   };
-
-   fluster.initialize();
-   });
+  $.getJSON('/json_data.html', function(suburb_data2) {
+    create_map(map, fluster, suburb_data2);
+    fluster.initialize();
+  });
 }
-
 </script>
 </head>
 <body onload="initialize()">
