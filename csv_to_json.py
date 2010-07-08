@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 
 import csv
+import json
 
 file = "sample_data_maps.txt"
 
 reader = csv.reader(open((file), 'r'), delimiter=',');
 
-keys = ("Suburb", "Postcode", "Longitude", "Latitude")
+keys = ("LocationID", "Suburb", "State", "Postcode", "Latitude", "Longitude")
 
-json = []
+all = []
 for row in reader:
     row = iter(row)
     data = {}
     for key in keys:
         data[key] = row.next()
-    json += [data]
-print json
+    all += [data]
+print json.dumps(all)
