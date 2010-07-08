@@ -1,9 +1,3 @@
-Authors:
-Giesemann, Geoffrey
-Liu, Carol
-Hall, Daniel
-Hussain, Mujtaba
-
 git clone this repo.
 
 Then ensure you have python installed
@@ -17,3 +11,5 @@ open chrome, and go to
 127.0.0.1:8900/
 
 And then rest should be easy.
+
+contact:mujtaba@mujtabahussain.net
