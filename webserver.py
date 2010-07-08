@@ -1,5 +1,3 @@
-#Copyright Jon Berg , turtlemeat.com
-
 import string,cgi,time
 from os import curdir, sep
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
@@ -10,8 +8,7 @@ class MyHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             if self.path.endswith(".html"):
-                f = open(curdir + sep + self.path) #self.path has /test.html
-#note that this potentially makes every file on your computer readable by the internet
+                f = open(curdir + sep + self.path)
 
                 self.send_response(200)
                 self.send_header('Content-type',	'text/plain')
@@ -36,8 +33,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 f.close()
                 return
             if self.path.endswith(".js"):
-                f = open(curdir + sep + self.path) #self.path has /test.html
-#note that this potentially makes every file on your computer readable by the internet
+                f = open(curdir + sep + self.path)
 
                 self.send_response(200)
                 self.send_header('Content-type',	'text/js')
