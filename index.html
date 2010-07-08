@@ -42,7 +42,7 @@ function initialize() {
   var controls = add_controls(map, home);
   var fluster = new Fluster2(map);
 
-  $.getJSON('/json_data.html', function(suburb_data2) {
+  $.getJSON('/data/json_data.html', function(suburb_data2) {
     create_map(map, fluster, suburb_data2);
     fluster.initialize();
   });
