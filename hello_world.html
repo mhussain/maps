@@ -10,11 +10,12 @@ body { height: 100%; margin: 0px; padding: 0px }
 
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript" src="fluster/lib/Fluster2.packed.js"></script>
+<script type="text/javascript" src="js/state.js"></script>
+<script type="text/javascript" src="js/add_controls.js"></script>
+<script type="text/javascript" src="js/create_map.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script type="text/javascript">
-
-
 
 var markersArray = []
 
@@ -33,83 +34,17 @@ function initialize() {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    var map = new google.maps.Map(
+      document.getElementById('map_canvas'),
+      myOptions
+    );
 
-    var victoria = new google.maps.LatLng(-37.79999924, 144.9833374);
-    var nsw = new google.maps.LatLng(-33.86666489, 151.19999695);
-    var sa = new google.maps.LatLng(-34.91999817, 138.6000061);
-
-    var homeDiv= document.createElement('DIV');
-    var homeControl = new State(map, homeDiv , home, "home");
-    homeDiv.index = 1;
-
-    var saDiv = document.createElement('DIV');
-    var saControl = new State(map, saDiv , sa, "sa");
-    saDiv.index = 2;
-
-    var vicDiv = document.createElement('DIV');
-    var vicControl = new State(map, vicDiv , victoria, "vic");
-    vicDiv.index = 3;
-
-    var nswDiv = document.createElement('DIV');
-    var nswControl = new State(map, nswDiv , nsw, "nsw");
-    nswDiv.index = 4;
-
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(homeDiv);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(vicDiv);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(saDiv);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(nswDiv);
-
+    var controls = add_controls(map, home);
     var fluster = new Fluster2(map);
 
-    $.getJSON("/json_data.html", function(suburb_data2) {
-      console.log("Working");
-      console.log(suburb_data2);
+    $.getJSON('/json_data.html', function(suburb_data2) {
 
-    $.each(suburb_data2, function(index, obj) {
-      suburb = obj.Suburb.toLowerCase();
-      var link = "http://www.realestate.com.au/buy/in-" + suburb.replace(' ', '+') + "/list-1";
-
-      var desc = "<table rules='all' align='justify'> \
-        <tr> \
-          <th>ID</th> \
-          <th>State</th> \
-          <th>Postcode</th> \
-          <th>Suburb</th> \
-          <th>View Properties</th> \
-        </tr> \
-        <tr> \
-          <td>" + obj.LocationID + "</td> \
-          <td>" + obj.State.toUpperCase() + "</td> \
-          <td>" + obj.Postcode + "</td> \
-          <td>" + obj.Suburb.toLowerCase() + "</td> \
-          <td><a href='" + link + "'>Properties list</a> </td> \
-        </tr> \
-        </table>";
-
-      var infowindow = new google.maps.InfoWindow({
-            content: desc
-      });
-
-      var latlng = new google.maps.LatLng(obj.Latitude, obj.Longitude);
-
-      var image = new google.maps.MarkerImage(
-        'http://127.0.0.1:8900/marker.png'
-      );
-
-      var marker = new google.maps.Marker({
-        position: latlng,
-        icon: image,
-        title: obj.Suburb + '-' + obj.Postcode
-      });
-
-      google.maps.event.addListener(marker, 'click', function() {
-          infowindow.open(map, marker);
-      });
-
-      fluster.addMarker(marker);
-
-    });
+    var created_map = create_map(map, fluster, suburb_data2);
 
     fluster.styles = {
       0: {
@@ -118,13 +53,13 @@ function initialize() {
         width: 53,
         height: 52
       },
-      10: {
+      50: {
         image: 'http://gmaps-utility-library.googlecode.com/svn/trunk/markerclusterer/1.0/images/m2.png',
         textColor: '#FFFFFF',
         width: 56,
         height: 55
       },
-      20: {
+      100: {
         image: 'http://gmaps-utility-library.googlecode.com/svn/trunk/markerclusterer/1.0/images/m3.png',
         textColor: '#FFFFFF',
         width: 66,
@@ -133,63 +68,7 @@ function initialize() {
    };
 
    fluster.initialize();
-    });
-}
-
-// Define a property to hold the Home state
-State.prototype.home_ = null;
-
-// Define setters and getters for this property
-State.prototype.getHome = function() {
-  return this.home_;
-}
-
-function State(map, div, home, state) {
-
-  // Get the control DIV. We'll attach our control
-  // UI to this DIV.
-  var controlDiv = div;
-
-  // We set up a variable for the 'this' keyword
-  // since we're adding event listeners later
-  // and 'this' will be out of scope.
-  var control = this;
-
-  // Set the home property upon construction
-  control.home_ = home;
-
-  // Set CSS styles for the DIV containing the control
-  // Setting padding to 5 px will offset the control
-  // from the edge of the map
-  controlDiv.style.padding = '3px';
-
-  // Set CSS for the control border
-  var goHomeUI = document.createElement('DIV');
-  goHomeUI.title = 'Go to ' + state.toUpperCase();
-  goHomeUI.style.padding = '2px';
-  goHomeUI.style.backgroundColor = 'white';
-  goHomeUI.style.borderStyle = 'solid';
-  goHomeUI.style.borderWidth = '1px';
-  goHomeUI.style.cursor = 'pointer';
-  goHomeUI.style.textAlign = 'center';
-  controlDiv.appendChild(goHomeUI);
-
-  // Set CSS for the control interior
-  var goHomeText = document.createElement('DIV');
-  goHomeText.innerHTML = state.toUpperCase();
-  goHomeUI.appendChild(goHomeText);
-
-  // Setup the click event listener for Home:
-  // simply set the map to the control's current home property.
-  var zoom = 6;
-  if (state == "home") {
-    zoom = 5;
-  }
-  google.maps.event.addDomListener(goHomeUI, 'click', function() {
-    var currentHome = control.getHome();
-    map.setCenter(currentHome);
-    map.setZoom(zoom);
-  });
+   });
 }
 
 </script>
