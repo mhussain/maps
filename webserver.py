@@ -71,7 +71,7 @@ class MyHandler(BaseHTTPRequestHandler):
 def main():
     try:
         server = HTTPServer(('', 8900), MyHandler)
-        print 'started httpserver...'
+        print 'Starting Border Control'
         server.serve_forever()
     except KeyboardInterrupt:
         print '^C received, shutting down server'
