@@ -29,13 +29,25 @@ function create_map(map, fluster, suburbs) {
 
     var latlng = new google.maps.LatLng(obj.Latitude, obj.Longitude);
 
-    var image = new google.maps.MarkerImage(
-      '/images/google-icons/icons/forest.png'
+    var image;
+    switch(obj.State) {
+        case 'qld': image =  "/images/google-icons/icons/sun.png"; break;
+        case 'wa': image =  "/images/google-icons/icons/mine.png"; break;
+        case 'sa': image =  "/images/google-icons/icons/church.png"; break;
+        case 'vic': image =  "/images/google-icons/icons/stadium.png"; break;
+        case 'nsw': image =  "/images/google-icons/icons/bridgemodern.png"; break;
+        case 'act': image =  "/images/google-icons/icons/embassy.png"; break;
+        case 'tas': image =  "/images/google-icons/icons/water.png"; break;
+        case 'nt': image =  "/images/google-icons/icons/aircraft-small.png"; break;
+        default: image = "/images/google-icons/icons/beautiful.png"; break;
+    }
+    var icon = new google.maps.MarkerImage(
+        image
     );
 
     var marker = new google.maps.Marker({
       position: latlng,
-      icon: image,
+      icon: icon,
       title: obj.Suburb + '-' + obj.Postcode
     });
 
