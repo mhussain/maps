@@ -42,7 +42,6 @@ function add_controls(map, home) {
         var div = document.createElement('DIV');
         var control = new State(map, div, state, stateNames[index]);
         div.index = index + 1;
-        console.log(index);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(div);
     });
 }

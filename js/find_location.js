@@ -31,13 +31,22 @@ function submitGeocode(control, map) {
     if (keyCode == 13) {
       geocoder.geocode( { address: control.value }, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          //map.fitBounds(results[0].geometry.viewport);
-          var location = results[0].geometry.location;
-          var lat = location.b;
-          var lng = location.c;
-          var center = new google.maps.LatLng(lat, lng);
-          map.setCenter(center);
-          map.setZoom(9);
+          var found_in_oz = false;
+          for (index in results) {
+            if (results[index].formatted_address.match(/Australia/)) {
+              var location = results[index].geometry.location;
+              var lat = location.b;
+              var lng = location.c;
+              var center = new google.maps.LatLng(lat, lng);
+              map.setCenter(center);
+              map.setZoom(9);
+              found_in_oz = true;
+              break;
+            }
+          }
+          if (found_in_oz == false) {
+              alert("The location was not found in Australia");
+          }
         }
         else {
           alert("The location entered could not be found");
