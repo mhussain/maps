@@ -23,8 +23,8 @@ function State(map, div, home, state) {
   goHomeUI.appendChild(goHomeText);
 
   var zoom = 6;
-  if (state == 'home') {
-    zoom = 5;
+  if (state == 'AU') {
+    zoom = 4;
   }
 
   google.maps.event.addDomListener(goHomeUI, 'click', function() {

@@ -5,28 +5,44 @@ function add_controls(map, home) {
       return this.home_;
     }
 
-    var victoria = new google.maps.LatLng(-37.79999924, 144.9833374);
+    var states = [];
+    var stateNames = new Array();
+    states.push(home);
+    stateNames[0] = "AU";
+
+    var vic = new google.maps.LatLng(-37.79999924, 144.9833374);
+    states.push(vic);
+    stateNames[1] = "VIC";
+
     var nsw = new google.maps.LatLng(-33.86666489, 151.19999695);
-    var sa = new google.maps.LatLng(-34.91999817, 138.6000061);
+    states.push(nsw);
+    stateNames[2] = "NSW";
 
-    var homeDiv= document.createElement('DIV');
-    var homeControl = new State(map, homeDiv , home, "home");
-    homeDiv.index = 1;
+    var sa  = new google.maps.LatLng(-34.91999817, 138.6000061);
+    states.push(sa);
+    stateNames[3] = "SA";
 
-    var saDiv = document.createElement('DIV');
-    var saControl = new State(map, saDiv , sa, "sa");
-    saDiv.index = 2;
+    var tas = new google.maps.LatLng( -42.88700104, 147.29499817);
+    states.push(tas);
+    stateNames[4] = "TAS";
 
-    var vicDiv = document.createElement('DIV');
-    var vicControl = new State(map, vicDiv , victoria, "vic");
-    vicDiv.index = 3;
+    var qld = new google.maps.LatLng(-27.46784973, 153.02606201);
+    states.push(qld);
+    stateNames[5] = "QLD";
 
-    var nswDiv = document.createElement('DIV');
-    var nswControl = new State(map, nswDiv , nsw, "nsw");
-    nswDiv.index = 4;
+    var nt  = new google.maps.LatLng(-12.46166706, 130.84165955);
+    states.push(nt);
+    stateNames[6] = "NT";
 
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(homeDiv);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(vicDiv);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(saDiv);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(nswDiv);
+    var act = new google.maps.LatLng(-35.29999924, 149.1333313);
+    states.push(act);
+    stateNames[7] = "ACT";
+
+    $.each(states, function(index, state) {
+        var div = document.createElement('DIV');
+        var control = new State(map, div, state, stateNames[index]);
+        div.index = index + 1;
+        console.log(index);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(div);
+    });
 }
