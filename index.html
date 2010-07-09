@@ -13,6 +13,7 @@ body { height: 100%; margin: 0px; padding: 0px }
 <script type="text/javascript" src="js/state.js"></script>
 <script type="text/javascript" src="js/add_controls.js"></script>
 <script type="text/javascript" src="js/create_map.js"></script>
+<script type="text/javascript" src="js/find_location.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script type="text/javascript">
@@ -40,6 +41,7 @@ function initialize() {
   );
 
   var controls = add_controls(map, home);
+  createGeocoderControl(map);
   var fluster = new Fluster2(map);
 
   $.getJSON('/data/json_data.html', function(suburb_data2) {
@@ -50,6 +52,7 @@ function initialize() {
 </script>
 </head>
   <body onload="initialize()">
-    <div id="map_canvas" style="width:100%; height:100%"></div>
+    <div id="map_canvas" style="width:100%; height:100%">
+    </div>
   </body>
 </html>
