@@ -67,7 +67,6 @@ function create_icons() {
 
       icons[states[index]] = new google.maps.MarkerImage(image)
     }
-    console.log(icons);
     return icons;
 }
 
