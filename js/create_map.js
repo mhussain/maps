@@ -1,5 +1,6 @@
 function create_map(map, fluster, suburbs) {
 
+  var icon, image, marker, latlng, infowindow;
   $.each(suburbs, function(index, obj) {
 
     suburb = obj.Suburb.toLowerCase();
@@ -23,13 +24,12 @@ function create_map(map, fluster, suburbs) {
     </tr> \
     </table>";
 
-    var infowindow = new google.maps.InfoWindow({
+    infowindow = new google.maps.InfoWindow({
       content: desc
     });
 
-    var latlng = new google.maps.LatLng(obj.Latitude, obj.Longitude);
+    latlng = new google.maps.LatLng(obj.Latitude, obj.Longitude);
 
-    var image;
     switch(obj.State) {
         case 'qld': image =  "/images/google-icons/icons/sun.png"; break;
         case 'wa': image =  "/images/google-icons/icons/mine.png"; break;
@@ -41,11 +41,11 @@ function create_map(map, fluster, suburbs) {
         case 'nt': image =  "/images/google-icons/icons/aircraft-small.png"; break;
         default: image = "/images/google-icons/icons/beautiful.png"; break;
     }
-    var icon = new google.maps.MarkerImage(
+    icon = new google.maps.MarkerImage(
         image
     );
 
-    var marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
       position: latlng,
       icon: icon,
       title: obj.Suburb + '-' + obj.Postcode
