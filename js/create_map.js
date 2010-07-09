@@ -30,7 +30,7 @@ function create_map(map, fluster, suburbs) {
     var latlng = new google.maps.LatLng(obj.Latitude, obj.Longitude);
 
     var image = new google.maps.MarkerImage(
-      '/images/marker.png'
+      '/images/google-icons/icons/forest.png'
     );
 
     var marker = new google.maps.Marker({
