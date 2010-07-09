@@ -1,6 +1,7 @@
 function create_map(map, fluster, suburbs) {
 
-  var icon, image, marker, latlng, infowindow;
+  var icons = create_icons();
+
   $.each(suburbs, function(index, obj) {
 
     suburb = obj.Suburb.toLowerCase();
@@ -24,30 +25,15 @@ function create_map(map, fluster, suburbs) {
     </tr> \
     </table>";
 
-    infowindow = new google.maps.InfoWindow({
+    var infowindow = new google.maps.InfoWindow({
       content: desc
     });
 
-    latlng = new google.maps.LatLng(obj.Latitude, obj.Longitude);
+    var latlng = new google.maps.LatLng(obj.Latitude, obj.Longitude);
 
-    switch(obj.State) {
-        case 'qld': image =  "/images/google-icons/icons/sun.png"; break;
-        case 'wa': image =  "/images/google-icons/icons/mine.png"; break;
-        case 'sa': image =  "/images/google-icons/icons/church.png"; break;
-        case 'vic': image =  "/images/google-icons/icons/stadium.png"; break;
-        case 'nsw': image =  "/images/google-icons/icons/bridgemodern.png"; break;
-        case 'act': image =  "/images/google-icons/icons/embassy.png"; break;
-        case 'tas': image =  "/images/google-icons/icons/water.png"; break;
-        case 'nt': image =  "/images/google-icons/icons/aircraft-small.png"; break;
-        default: image = "/images/google-icons/icons/beautiful.png"; break;
-    }
-    icon = new google.maps.MarkerImage(
-        image
-    );
-
-    marker = new google.maps.Marker({
+    var marker = new google.maps.Marker({
       position: latlng,
-      icon: icon,
+      icon: icons[obj.State],
       title: obj.Suburb + '-' + obj.Postcode
     });
 
@@ -59,6 +45,30 @@ function create_map(map, fluster, suburbs) {
   });
 
   add_styles_to_fluster(fluster);
+}
+
+function create_icons() {
+    var icons = new Object();
+    var states = ['vic', 'sa', 'qld', 'nt', 'tas', 'nsw', 'wa', 'act'];
+    var image, state;
+
+    for (index in states) {
+      switch(states[index]) {
+        case 'qld': image =  "/images/google-icons/icons/sun.png"; break;
+        case 'wa': image =  "/images/google-icons/icons/mine.png"; break;
+        case 'sa': image =  "/images/google-icons/icons/church.png"; break;
+        case 'vic': image =  "/images/google-icons/icons/stadium.png"; break;
+        case 'nsw': image =  "/images/google-icons/icons/bridgemodern.png"; break;
+        case 'act': image =  "/images/google-icons/icons/embassy.png"; break;
+        case 'tas': image =  "/images/google-icons/icons/water.png"; break;
+        case 'nt': image =  "/images/google-icons/icons/aircraft-small.png"; break;
+        default: image = "/images/google-icons/icons/beautiful.png"; break;
+      }
+
+      icons[states[index]] = new google.maps.MarkerImage(image)
+    }
+    console.log(icons);
+    return icons;
 }
 
 function add_styles_to_fluster(fluster) {

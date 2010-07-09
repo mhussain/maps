@@ -39,7 +39,7 @@ function submitGeocode(control, map) {
               var lng = location.c;
               var center = new google.maps.LatLng(lat, lng);
               map.setCenter(center);
-              map.setZoom(12);
+              map.setZoom(9);
               found_in_oz = true;
               break;
             }
